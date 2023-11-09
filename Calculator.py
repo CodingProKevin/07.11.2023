@@ -1,39 +1,43 @@
-def calculate():
-    num1 = input("Please enter your first number: ")
-    while num1.replace(".", "").isnumeric() == False:
-        print("You have not entered a valid value")
-        num1 = input("Please enter your first number: ")
+def checkOP(string):
+    global Opos 
+    global OP
+    counter = False
 
-    operator = input("please choose an operator of the following:\n1)+\n2)-\n3)/\n4)*\n")
-    while operator != "+" and operator != "-" and operator != "/" and operator != "*":
-        print("You have not entered a correct operator")
-        operator = input("please choose an operator of the following:\n1)+\n2)-\n3)/\n4)*\n")
-
-    num2 = input("Please enter your second number: ")
-    while num2.replace(".", "").isnumeric() == False:
-        print("You have not entered a valid value")
-        num2 = input("Please enter your second number: ")
-
-    num1 = float(num1)
-    num2 = float(num2)
-
-    if operator == "+":
-        solution = num1 + num2
-    elif operator == "-":
-        solution = num1 - num2
-    elif operator == "/":
-        try:
-            solution = num1 / num2
-        except:
-            print("There is an error when dividing these numbers")
-            return
+    for i in range(len(question)):
+        if question[i] == "+" or question[i] == "-" or question[i] == "/" or question[i] == "*":
+            counter = True
+            Opos = i
+            OP = question[i]
+            return Opos
             
-    elif operator == "*":
-        solution = num1 * num2
+    if counter == False:
+        print("Error, There is no operator")
+        exit()
 
-    print("The answer to",num1,operator,num2,"=",round(solution, 2))
-    return
+question = input("Enter your query(+,-,/,*):\n")
 
+checkOP(question)
 
-while True:
-    calculate()
+num1 = str("")
+num2 = str("")
+for i in range(len(question)):
+    if question[i].isnumeric() == True and i < Opos:
+        num1 = num1 + question[i]
+    elif question[i].isnumeric() == True and i > Opos:
+        num2 = num2 + question[i]
+
+num1 = int(num1)
+num2 = int(num2)
+if OP == "+":
+    total = num1 + num2
+if OP == "-":
+    total = num1 - num2
+if OP == "/":
+    try:
+        total = num1 / num2
+    except:
+        print("You cannot divide these 2 number together")
+if OP == "*":
+    total = num1 * num2
+
+print(total)
